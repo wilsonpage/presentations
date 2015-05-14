@@ -101,7 +101,7 @@
 <pre class="js"><code data-trim contenteditable>
 var el = document.querySelector('my-awesome-element');
 el.constructor.name; //=> 'HTMLElement';
-document.registerElement('x-foo', ...);
+document.registerElement('my-awesome-element', ...);
 el.constructor.name; //=> 'my-awesome-element';
 </code></pre>
         </section>
@@ -317,8 +317,8 @@ x-foo {
           </code></pre>
           <pre class="fragment css"><code contenteditable data-trim>
 
-.internal-thing { background: --background-color; }
-.other-bit { color: --something-else; }
+.internal-thing { background: var(--background-color); }
+.other-bit { color: var(--something-else); }
 
           </code></pre>
         </section>
