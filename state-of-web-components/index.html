@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>The state of web components</title>
+
+    <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+    <meta name="author" content="Hakim El Hattab">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/wilson.css" id="theme">
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/monokai_sublime.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body spellcheck="false">
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+        <section>
+          <h1>The state of web components</h1>
+          <p>
+            <small>by <a href="http://twitter.com/wilsonpage">Wilson Page</a></small>
+          </p>
+        </section>
+
+        <section>
+          <img src="lib/images/firefox-dev.png" style="width: 50%">
+        </section>
+
+        <section>
+          <img src="lib/images/wc-google-io.png">
+          <!-- <h2>First introduced in 2012</h2> -->
+        </section>
+
+        <section>
+          <img src="lib/images/polymer-logo.svg" style="width: 50%">
+        </section>
+
+        <section>
+          <h2>Three years on, web components <em>should</em> be everywhere</h2>
+        </section>
+
+        <section>
+          <h1>Why has this taken so long?!</h1>
+        </section>
+
+        <section>
+          <h2>Vendors couldn't agree</h2><span style="font-size:2.4em">😭</span>
+        </section>
+
+        <section>
+          <h2>Until now, only a Google effort</h2>
+        </section>
+
+        <section>
+          <h2>Very ambitious proposal</h2>
+          <pre><code class="fragment js">(complexity + highLevel) === vendor.contention</code></pre>
+          <p class="fragment">No easy task!</p>
+        </section>
+
+        <section>
+          <h1>Custom Elements</h1>
+        </section>
+
+        <section>
+          <h2>The least contentious bit</h2>
+          <p class="fragment">Everyone agrees we need them</p>
+          <p class="fragment">Couple of things to iron out...</p>
+        </section>
+
+        <section>
+          <h2>'Upgrade'</h2>
+          <code>HTMLElement</code> -> <code>MyAwesomeElement</code>
+        </section>
+
+        <section>
+<pre class="js"><code data-trim contenteditable>
+var el = document.querySelector('my-awesome-element');
+el.constructor.name; //=> 'HTMLElement';
+document.registerElement('x-foo', ...);
+el.constructor.name; //=> 'my-awesome-element';
+</code></pre>
+        </section>
+
+        <section>
+<pre class="js"><code data-trim contenteditable>
+var proto = Object.create(HTMLElement.prototype);
+proto.createdCallback = function() { ... };
+document.registerElement('x-foo', { prototype: proto });
+</code></pre>
+        </section>
+
+        <section>
+          <h2>We can probably do better</h2>
+          <p class="fragment">There are <a href="https://wiki.whatwg.org/wiki/Custom_Elements#Upgrading">five new proposals</a></p>
+        </section>
+
+        <section>
+          <h2>Two most promising</h2>
+<pre class="fragment js"><code>class MyEl extends HTMLElement {
+  constructor() { ... }
+}</code></pre>
+
+<pre class="fragment js"><code>class MyEl extends HTMLElement {
+  createdCallback() { ... }
+}</code></pre>
+
+<pre class="fragment js"><code>document.registerElement('my-el', MyEl);</code></pre>
+        </section>
+
+        <section>
+          <h2>'Synchronous Constructor'</h2>
+<pre class="js"><code>class MyEl extends HTMLElement {
+  constructor() { ... }
+}</code></pre>
+
+          <ul style="list-style:none">
+            <li class="fragment">👍 created using <em>real</em> constructors</li>
+            <li class="fragment">👎 complications with <code>.cloneNode()</code></li>
+            <li class="fragment">👎 <code>registerElement()</code> must run before parse</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>'Dmitri'</h2>
+<pre class="js"><code>class MyEl extends HTMLElement {
+  createdCallback() { ... }
+}</code></pre>
+
+          <ul style="list-style:none">
+            <li class="fragment">👍 elements can be upgraded lazily (more robust)</li>
+            <li class="fragment">👎 different to how built-in elements work</li>
+            <li class="fragment">👎 'unknown' state is confusing</li>
+          </ul>
+        </section>
+
+        <section>
+          <h1><code>is</code></h1>
+        </section>
+
+        <section>
+          <h2>Enhances built-in elements</h2>
+          <pre class="fragment html"><code>&lt;input type="text" is="my-text-input"&gt;</code></pre>
+        </section>
+
+        <section>
+          <h2>For</h2>
+          <ol>
+            <li class="fragment">Extend element features that aren't yet exposed.</li>
+            <li class="fragment">Progressive enhancement</li>
+          </ol>
+        </section>
+
+        <section>
+          <h2>Against</h2>
+          <ol>
+            <li class="fragment">Ignores the problem of <em>missing primitives</em></li>
+            <li class="fragment">Ignores the problem of extending built-in elements</li>
+            <li class="fragment">Limited use-cases</li>
+            <li class="fragment">Confusing syntax</li>
+          </ol>
+        </section>
+
+        <section>
+          <h2>Consensus</h2>
+          <p class="fragment">Google wants it as a stop-gap</p>
+          <p class="fragment">Mozilla and Apple want to ship quicker without polluting the platform</p>
+          <p class="fragment">Focus on a better solution in a 'V2'</p>
+        </section>
+
+        <section>
+          <h1>Shadow DOM</h1>
+          <p class="fragment">(the difficult part)</p>
+        </section>
+
+        <section>
+          <h2>'Distribution'</h2>
+          <p class="fragment">The projection of the host's content <br>into the shadow root</p>
+        </section>
+
+        <section>
+          <h2>What we have today</h2>
+          <pre class="html"><code>&lt;content select="header"&gt;&lt;/content&gt;</code></pre>
+        </section>
+
+        <section>
+          <h2>Agreement couldn't be made on declarative API</h2>
+        </section>
+
+        <section>
+<pre class="js"><code contenteditable>var shadow = host.createShadowRoot({
+  distribute: function(nodes) {
+    var slot = shadow.querySelector('content');
+    for (var i = 0; i < nodes.length; i++) {
+      slot.add(nodes[i]);
+    }
+  }
+});
+
+shadow.innerHTML = '<content></content>';
+
+// Call initially ...
+shadow.distribute();
+
+// then hook up to MutationObserver</code></pre>
+        </section>
+
+        <section>
+          <h3>Timing, timing, timing</h3>
+<pre class="js"><code contenteditable>myHost.appendChild(someElement);
+someElement.offsetTop; //=> old value
+
+// distribute on mutation observer callback (async)
+
+someElement.offsetTop; //=> new value</code></pre>
+        </section>
+
+        <section>
+          <h3>Resolution</h3>
+          <p class="fragment">Work on imperative API until July 2015</p>
+          <p class="fragment">If impossible, back to declarative API negotiations</p>
+        </section>
+
+        <section>
+          <h2>'closed' VS. 'open'</h2>
+          <p>Open: <code>el.shadowRoot.querySelector('.secrets')</code></p>
+          <p>Closed: <code>el.shadowRoot === null</code></p>
+        </section>
+
+        <section>
+          <pre class="js"><code contenteditable>element.createShadowRoot({ mode: 'open' });
+element.createShadowRoot({ mode: 'closed' });</code></pre>
+        </section>
+
+        <section>
+          <h3>Apple want it</h3>
+          <ul>
+            <li class="fragment">Believe implementation details should <br>always be hidden</li>
+            <li class="fragment">Will be required for 'isolated' custom elements</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3>Google don't</h3>
+          <ul>
+            <li class="fragment">Blocks accessibility and tooling libraries</li>
+            <li class="fragment">JS is open, we should keep it that way</li>
+            <li class="fragment">Shadow root was designed to be hidden</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3>Resolution</h3>
+          <p class="fragment">We need the <code>mode</code> feature</p>
+          <p class="fragment">Parameter required, so no default value</p>
+        </section>
+
+        <section>
+          <h2>Shadow piercing <br>combinators</h2>
+        </section>
+
+        <section>
+          <pre class="css"><code contenteditable>x-foo /deep/ div { color: red }</code></pre>
+          <pre class="css"><code contenteditable>x-foo::shadow div { color: red }</code></pre>
+          <pre class="css"><code contenteditable>x-foo >>> div { color: red }</code></pre>
+        </section>
+
+        <section>
+          <h2>Designed to style internals <br>from outside ...</h2>
+        </section>
+
+        <section>
+          <h2>... things got <a href="https://github.com/KarstenB/csstransform/blob/master/bootstrap_deep.css" target="_blank">messy</a>!</h2>
+        </section>
+
+        <section>
+          <h3>Prevents unique optimization opportunities</h3>
+        </section>
+
+        <section>
+          <h2>New solutions coming along</h2>
+        </section>
+
+        <section>
+          <h3>Custom properties (variables)</h3>
+          <pre class="css"><code contenteditable data-trim>
+
+x-foo {
+  --background-color: red;
+  --something-else: black;
+}
+
+          </code></pre>
+          <pre class="fragment css"><code contenteditable data-trim>
+
+.internal-thing { background: --background-color; }
+.other-bit { color: --something-else; }
+
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>Mixins - <code><a href="https://tabatkins.github.io/specs/css-extend-rule/" target="_blank">@extend</a></code></h3>
+          <pre class="css"><code contenteditable data-trim>
+.x-foo-part {
+  background-color: red;
+  border-radius: 4px;
+}
+          </code></pre>
+
+          <pre class="css"><code contenteditable data-trim>
+.internal-part {
+  @extend .x-foo-part;
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>Custom pseudo elements</h3>
+          <pre class="css"><code contenteditable>input[type=range]::-moz-range-thumb { ... }</code></pre>
+          <pre class="fragment css"><code contenteditable>x-foo::my-internal-part { ... }</code></pre>
+        </section>
+
+        <section>
+          <h3>Resolution</h3>
+          <p class="fragment">All vendors agreed to drop <code>/deep/</code></p>
+        </section>
+
+        <section>
+          <h2>Multiple shadow roots</h2>
+        </section>
+
+        <section>
+          <span style="font-size: 5em">😦</span>
+        </section>
+
+        <section>
+          <h2>Structural inheritance</h2>
+        </section>
+
+        <section>
+          <section>
+            <img src="lib/images/x-dialog.png" style="width:350px">
+          </section>
+
+          <section>
+            <pre class="html"><code contenteditable data-trim>
+
+<x-dialog>
+  <h1>My title</h1>
+  <p>Some details</p>
+  <button>Cancel</button>
+  <button>OK</button>
+</x-dialog>
+
+            </code></pre>
+          </section>
+
+          <section>
+            <pre class="html"><code contenteditable data-trim>
+
+<div class="outer">
+  <div class="inner">
+  <content></content>
+  </div>
+</div>
+
+            </code></pre>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <img src="lib/images/x-dialog-alert.png" style="width:350px">
+          </section>
+          <section>
+            <pre class="html"><code contenteditable data-trim>
+
+<x-dialog-alert>foo</x-dialog-alert>
+
+            </code></pre>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <pre class="js" style="word-wrap: break-word"><code contenteditable data-trim>
+
+var XDialog = require('x-dialog');
+var proto = Object.create(XDialog.prototype);
+
+proto.createdCallback = function() {
+  XDialog.prototype.createdCallback.call(this);
+  this.createShadowRoot(); // <= 2nd shadow root
+  this.shadowRoot.innerHTML = someHTML;
+};
+
+document.registerElement('x-dialog-alert', {
+  prototype: proto
+});
+
+            </code></pre>
+          </section>
+
+          <section>
+            <pre class="js" style="word-wrap: break-word"><code contenteditable data-trim>
+
+<shadow>
+  <h1>Alert</h1>
+  <p><content></content></p>
+  <button>OK</button>
+</shadow>
+
+            </code></pre>
+          </section>
+        </section>
+
+        <section>
+          <h2>Resolution:</h2>
+          <p class="fragment">Multiple shadow roots not part of 'V1'</p>
+        </section>
+
+        <section>
+          <h2>Inheritance still possible ...</h2>
+          <span class="fragment" style="font-size:3em">😯</span>
+        </section>
+
+        <section>
+          <pre class="js stretch" style="word-wrap: break-word"><code contenteditable data-trim>
+
+var proto = Object.create(XDialog.prototype);
+
+proto.createdCallback = function() {
+  XDialog.prototype.createdCallback.call(this);
+  var inner = this.shadowRoot.querySelector('.inner');
+
+  var h1 = document.createElement('h1');
+  h1.textContent = 'Alert';
+  inner.insertBefore(h1, inner.children[0]);
+
+  var button = document.createElement('button');
+  button.textContent = 'OK';
+  inner.appendChild(button);
+
+  ...
+};
+
+document.registerElement('x-dialog-alert', {
+  prototype: proto
+});
+
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>Downsides</h3>
+          <ul>
+            <li class="fragment">Sub-component dependent on the implementation details</li>
+            <li class="fragment">Not possible if super shadow root is <code class="js">'closed'</code></li>
+            <li class="fragment">Not as elegant</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>HTML Imports</h2>
+        </section>
+
+        <section>
+          <h3>Maybe useful for isolated elements</h3>
+        </section>
+
+        <section>
+          <h2>Wrap up</h2>
+          <ul>
+            <li class="fragment">Web Components are ambitious</li>
+            <li class="fragment">Standards are hard</li>
+            <li class="fragment">All vendors are on-board</li>
+            <li class="fragment">We're near the end</li>
+          </ul>
+        </section>
+
+        <section>
+          <h1>Get ready to componentize the web!</h1>
+        </section>
+
+        <section>
+          <h2><a href="http://twitter.com/wilsonpage">@wilsonpage</a></h2>
+        </section>
+      </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: false,
+        progress: true,
+        history: true,
+        center: true,
+
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true },
+          { src: 'plugin/notes/notes.js', async: true }
+        ]
+      });
+
+    </script>
+
+  </body>
+</html>
