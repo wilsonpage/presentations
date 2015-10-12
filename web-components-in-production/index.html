@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>The state of web components</title>
+
+    <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+    <meta name="author" content="Hakim El Hattab">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/wilson.css" id="theme">
+
+    <link rel="stylesheet" href="bower_components/gaia-theme/gaia-theme.css">
+    <link rel="stylesheet" href="bower_components/gaia-icons/gaia-icons.css">
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/monokai_sublime.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body spellcheck="false" class="theme-settings">
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+        <section>
+          <h1>Web Components in Firefox OS</h1>
+          <p>
+            <small>by <a href="http://twitter.com/wilsonpage">Wilson Page</a></small>
+          </p>
+        </section>
+
+        <section>
+          <img src="lib/images/firefox-dev.png" style="width: 50%">
+        </section>
+
+        <section>
+          <h2>What are Web Components for?</h2>
+        </section>
+
+        <section>
+          <h2>APIs remain out of reach</h2>
+        </section>
+
+        <section>
+          <img src="lib/images/switch.png" style="width: 50%">
+        </section>
+
+        <section>
+          <code class="js">dom.webcomponents.enabled</code>
+        </section>
+
+        <section>
+          <h1>Components in FirefoxOS</h1>
+        </section>
+
+        <section>
+          <h2>Core apps need to look related</h2>
+          <p>Sharing common UI brings consistency</p>
+        </section>
+
+        <section>
+          <h2>Previously we used simple CSS</h2>
+          <p>But we ran into some problems</p>
+        </section>
+
+        <section>
+          <ul>
+            <li>Users have to write the correct markup</li>
+            <li class="fragment">Styling could be overriden by external CSS</li>
+            <li class="fragment">Logic-less CSS: preventing rich interactions</li>
+            <li class="fragment">Difficult to update: Due to tailored implementations</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Web Components solve many of these issues</h2>
+        </section>
+
+        <section>
+          <ul>
+            <li>Markup bundled inside a component: doesn't have to be written by users</li>
+            <li class="fragment">Styling isolated/protected from external CSS</li>
+            <li class="fragment">Can come with JS logic as well as styling</li>
+            <li class="fragment">Implementation details hidden for simple updates</li>
+          </ul>
+        </section>
+
+        <section>
+          <h1>A new approach</h1>
+          <p><a href="http://github.com/gaia-components">github.com/gaia-components</a></p>
+        </section>
+
+        <section>
+          <ul>
+            <li>Each component has its own repo</li>
+            <li class="fragment">Installable</li>
+            <li class="fragment">Versioned separately</li>
+            <li class="fragment">Tested separately</li>
+            <li class="fragment">Issues tracked separately</li>
+            <li class="fragment">Supports all module formats</li>
+          </ul>
+        </section>
+
+        <section>
+          <h1>Modules</h1>
+          <p>HTML Imports...?</p>
+        </section>
+
+        <section>
+          <pre><code class="">document.registerElement('x-foo', {
+  prototype: {
+    createdCallback: function() {
+      this.createShadowRoot().innerHTML = `
+        <h1>title</h1>
+        <style>h1 { color: red; }</style>
+      `;
+    }
+  }
+});</code></pre>
+        </section>
+
+        <section>
+          <h1>'UMD'</h1>
+        </section>
+
+        <section>
+          <pre><code class="js">;(function(define){define(function(require,exports,module){
+
+var dependency = require('some-dependency');
+
+...
+
+module.exports = { exported: 'stuff' };
+
+});})(typeof define=='function'&&define.amd?define
+:(function(n,w){return typeof module=='object'?function(c){
+c(require,exports,module);}:function(c){var m={exports:{}};c(function(n){
+return w[n];},m.exports,m);w[n]=m.exports;};})('module-name',this));</code></pre>
+        </section>
+
+        <section>
+          <h2>Theming</h2>
+        </section>
+
+        <section>
+          <ul>
+            <li>Media</li>
+            <li class="fragment">Productivity</li>
+            <li class="fragment">Communications</li>
+            <li class="fragment">Settings</li>
+          </ul>
+        </section>
+
+        <section>
+<pre><code class="js">.theme-settings {
+  --background: var(--color-iota);
+  --background-plus: var(--color-beta);
+  --background-minus: var(--color-epsilon);
+  --background-minus-minus: var(--color-zeta);
+  --highlight-color: var(--color-blue);
+  --border-color: var(--color-theta);
+}</code></pre>
+        </section>
+
+        <section>
+<pre><code class="html">&lt;html&gt;
+  &lt;head&gt;
+    &lt;link rel="stylesheet" href="gaia-theme.css"&gt;
+  &lt;/head&gt;
+  &lt;body class="theme-media"&gt;</code></pre>
+        </section>
+
+        <section>
+          <h1>Testing</h1>
+        </section>
+
+        <section>
+          <ul>
+            <li>Unit tests via: Karma, Mocha, SinonJS and Chai</li>
+            <li class="fragment">Integration tests via: Mocha and MarionetteJS</li>
+            <li class="fragment">Accessibility testing via: MarionetteJS and Axe</li>
+            <li class="fragment">Linting via: JSHint</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>CI via Travis</h2>
+          <p>Tests run against pull-request</p>
+        </section>
+
+        <section>
+          <img src="lib/images/travis.png"/>
+        </section>
+
+        <section>
+          <h1>Installing</h1>
+        </section>
+
+        <section>
+          <img src="lib/images/bower-logo.svg" style="width: 50%">
+        </section>
+
+        <section>
+          <ul>
+            <li>Dependencies 'flattened' to a known directory
+            <li class="fragment">Github is the sole registry: publish once</li>
+            <li class="fragment">Git tags as versions: version once</li>
+            <li class="fragment">Dependencies deduped</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Typical workflow</h2>
+        </section>
+
+        <section>
+          <ol>
+            <li>Submit a pull-request to a component's repo
+            <li class="fragment">Reviewed by component owner</li>
+            <li class="fragment">Merged into `master` branch</li>
+            <li class="fragment">Owner stamps new version using `git tag` (SemVer)</li>
+            <li class="fragment">Owner pushes tag to Github</li>
+            <li class="fragment">Component is updated to new version in Gaia</li>
+            <li class="fragment">New files checked-in to Gaia</li>
+          </ol>
+        </section>
+
+        <section>
+          <h2><a href="http://twitter.com/wilsonpage">@wilsonpage</a></h2>
+        </section>
+      </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: false,
+        progress: true,
+        history: true,
+        center: true,
+
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true },
+          { src: 'plugin/notes/notes.js', async: true }
+        ]
+      });
+
+    </script>
+
+  </body>
+</html>
