@@ -1,0 +1,1375 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>The component approach</title>
+
+    <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+    <meta name="author" content="Hakim El Hattab">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/wilsonpage.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/github.css">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+<section class="dark" data-background="rgba(255,0,0, 0.6)">
+  <h1 style="margin-bottom:2rem">The component approach</h1>
+  <p>
+    <small>by Wilson Page / <a href="http://twitter.com/wilsonpage">@wilsonpage</a></small>
+  </p>
+
+  <aside class="notes" data-markdown>
+    - Today I'm going to talk about a front-end approach I've been taking in recent years
+    - I **call this approach** 'the component approach'
+    - **Next:** A bit of background...
+  </aside>
+</section>
+
+<section>
+  <img style="width: 73%; opacity: 0.8;" class="clean" src="lib/images/ft-logo.svg" />
+</section>
+
+<section>
+  <img style="width: 50%" class="clean" src="lib/images/economist-logo.gif" />
+</section>
+
+<section>
+  <img style="width: 50%" class="clean" src="lib/images/firefoxos-logo.png" />
+</section>
+
+<!-- <section>
+  <h2>Writing components today</h2>
+
+  <aside class="notes" data-markdown>
+    - Before the dawn of web-components
+    - Concepts still apply
+    - No matter what your choice of library is
+  </aside>
+</section> -->
+
+<section>
+  <h3>Break pages into chunks...</h3>
+  <h3 class="fragment">everything's a component</h3>
+
+  <aside class="notes" data-markdown>
+    - Essentially we devide our pages into pieces
+    - We don't have some parts of the page as components and some not.
+    - Everything is a component.
+  </aside>
+</section>
+
+<section>
+  <h3>Component?</h3>
+  <h3 class="fragment">Definition</h3>
+  <h3 class="fragment">Encapsulation</h3>
+  <h3 class="fragment">Communication</h3>
+  <h3 class="fragment">Performance</h3>
+  <h3 class="fragment">Styling</h3>
+  <h3 class="fragment">Responsive</h3>
+
+  <aside class="notes" data-markdown>
+    - Physical components
+    - 'FruitMachine'
+    - It's not always obvious.
+    - Aides encapsulation, untangled achitecture
+    - Portabile and water-tight.
+    - Responsive: range of screen sizes.
+  </aside>
+</section>
+
+<section class="dark" data-background="rgba(255,0,0, 0.6)">
+  <h1>Component?</h1>
+</section>
+
+<section>
+  <h2>"A part that combines with other parts to form something bigger"</h2>
+
+  <aside class="notes" data-markdown>
+    - Let's have a look at an example of real life component, and what we can learn from it.
+  </aside>
+</section>
+
+<section>
+  <img class="clean" src="lib/images/starter-motor.jpg" />
+
+  <aside class="notes" data-markdown>
+    - Starter motor that you'd find in the bonnet of your car
+    - Input => electric current. Output => Turning cog
+    - Black box, implementation is hidden. **It's encapsuldated**.
+    - Components manufactures all over the world
+    - A lot can be learnt from this established manufacturing process
+    - Let's take a look at a more familiar component.
+  </aside>
+</section>
+
+<section>
+  <h1>&lt;video&gt;</h1>
+
+  <aside class="notes" data-markdown>
+    - If you've used the video-element,
+    - you've already worked with components.
+  </aside>
+</section>
+
+<section>
+  <img src="lib/images/video-element.png" />
+
+  <aside class="notes" data-markdown>
+    - Great example of how components should be designed.
+    - Proof that designing in the right way can make components usable in infinite ways.
+  </aside>
+</section>
+
+<section>
+  <h3>Public API</h3>
+  <code>video.play()</code>
+  <code>video.pause()</code>
+  <code>video.load()</code>
+
+  <aside class="notes" data-markdown>
+    - The interface that we use to control the component
+  </aside>
+</section>
+
+<section>
+  <h3>Events</h3>
+
+  <code>'ended'</code>
+  <code>'error'</code>
+  <code>'playing'</code>
+  <code>'progress'</code>
+  <code>'waiting'</code>
+
+  <aside class="notes" data-markdown>
+    - Emits numerous events
+    - We can listen to an react when the component tells us something has changed
+  </aside>
+</section>
+
+<section>
+  <h3>Markup - HTML</h3>
+  <h3 class="fragment">Styling - CSS</h3>
+  <h3 class="fragment">Behaviour - JS</h3>
+
+  <aside class="notes" data-markdown>
+    - 3 Ingredients that form a component:
+      - Markup: Structure and content
+      - Styling:
+      - Behaviour:
+  </aside>
+</section>
+
+<section>
+  <h2 class="fragment">Encapsulated</h2>
+  <h2 class="fragment">Controllable</h2>
+  <h2 class="fragment">Informative</h2>
+  <h2 class="fragment">Configurable</h2>
+  <h2 class="fragment">Reusable</h2>
+
+  <aside class="notes" data-markdown>
+    - The characteristics of a good component:
+      - Complexity hidden
+      - Give the user control
+      - Notify us when things change
+      - Shouldn't attempt to work perfectly out of the box
+      - Create as many as we like
+  </aside>
+</section>
+
+<!-- DEFINITION -->
+
+<section class="dark" data-background="rgba(255,0,0, 0.6)">
+  <h1>Definition</h1>
+</section>
+
+<section>
+  <h2>You don't need a framework to get started with components</h2>
+
+ <aside class="notes" data-markdown>
+  - Infinate ways to define a 'component'
+  - You don't need a framework to get started
+ </aside>
+</section>
+
+<section>
+<pre><code class="javascript" data-trim>
+var MyComponent = function() {
+  this.el = document.createElement('div');
+};
+
+MyComponent.prototype.render = function() {
+  this.el.innerHTML = 'hello world';
+};
+</code></pre>
+
+<pre><code class="javascript" data-trim>
+var component = new MyComponent();
+component.render();
+document.body.appendChild(component.el);
+</code></pre>
+
+<aside class="notes" data-markdown>
+  - Instantiable 'class', we can create as many as we need.
+  - Root element DOM handle, marks the boundary
+  - Render injects HTML into the root element
+</aside>
+</section>
+
+<section>
+  <h2>Why use a framework then?</h2>
+</section>
+
+<section>
+  <h3>Consistent codebase</h3>
+  <h3 class="fragment">Interoperability</h3>
+  <h3 class="fragment">Abstract repetition</h3>
+
+  <aside class="notes" data-markdown>
+    - Consistent codebase
+      - Familiarity across team
+      - Without guidelines, on large teams, things can get messy
+    - Enable interoperability
+      - Consistent API means components can work together
+      - With a basic known API, we can write plugins
+    - Abstract repetition
+      - Tackle problems centrally
+  </aside>
+</section>
+
+<section>
+  <h1 class="no-margin">FruitMachine</h1>
+  <h4><a href="http://github.com/ftlabs/fruitmachine">github.com/ftlabs/fruitmachine</a></h4>
+
+  <aside class="notes" data-markdown>
+    - At the Financial Times we wrote FruitMachine
+    - Provided us with a consistent way to define and assemble view components
+  </aside>
+</section>
+
+<section>
+  <h3>'A lightweight library for defining and assembling UI components'</h3>
+</section>
+
+<section>
+<pre><code class="javascript" data-trim>
+var MyComponent = fruitmachine.define({
+  name: 'my-component',
+  template: function() {
+    return 'hello world';
+  }
+});
+</code></pre>
+
+<pre><code class="javascript" data-trim>
+// Usage
+var component = new MyComponent();
+component.render();
+component.appendTo(document.body);
+</code></pre>
+
+  <aside class="notes" data-markdown>
+    - Here is an example of a basic view
+    - template is just a function
+    - So why write our own library...?
+  </aside>
+</section>
+
+<section>
+  <h2>Why did we write our own?</h2>
+
+  <aside class="notes" data-markdown>
+    - We wanted something fully tailored to our needs.
+    - We wanted to know the code-base inside out.
+    - But perhaps it was just the 'control-freak' nature of our team
+    - Let's tak a look at what our requirements were...
+  </aside>
+</section>
+
+<section>
+  <h2>'Retro-fittability'</h2>
+
+  <aside class="notes" data-markdown>
+    - Large codebase, application rewrite is unfeasible.
+    - New components has to sit alongside old legacy UI.
+    - Had to be light, un-costly to experiment
+    - Gradually spread across code-base
+    - FruitMachine now renders every view in the FT web-app
+  </aside>
+</section>
+
+<section>
+  <h2>Declarative layouts</h2>
+
+  <aside class="notes" data-markdown>
+    - Not just defining the components, but also the assembly.
+  </aside>
+</section>
+
+<section>
+<pre class="stretch"><code class="json" data-trim>
+{
+  "module": "layout-a",
+  "children": {
+    "slot1": {
+      "module": "header",
+      "model": {
+        "title": "My Web App"
+      }
+    },
+    "slot2": {
+      "module": "big-story",
+      "model": {
+        "title": "Story title",
+        "body": "Story body..."
+      }
+    },
+    ...
+  }
+}
+</code></pre>
+</section>
+
+<section>
+<pre><code class="javascript" data-trim>
+var layout = fruitmachine(layoutJSON);
+
+layout
+  .render()
+  .appendTo(document.body);
+</code></pre>
+</section>
+
+<section>
+<pre><code class="html" data-trim>
+<div class="layout-a_slot-1">{{{ slot1 }}}</div>
+<div class="layout-a_slot-2">{{{ slot2 }}}</div>
+</code></pre>
+
+<aside class="notes" data-markdown>
+  - The template for the 'layout-a' module
+</aside>
+</section>
+
+<section>
+  <h2>Server-side rendering</h2>
+
+  <aside class="notes" data-markdown>
+    - Wasn't a immediate requirement
+    - Didn't want FM to limit what was possible in the future
+    - **Next:** Advantages of server-side rendering?
+  </aside>
+</section>
+
+<section>
+  <h3>Crawlable content</h3>
+  <h3 class="fragment">Faster 'time to content'</h3>
+  <h3 class="fragment">Provide a <code>&lt;noscript&gt;</code> experience</h3>
+
+  <aside class="notes" data-markdown>
+    - Search engine spiders
+    - Don't have to wait for JavaScript
+    - Support a basic experience, and progressively enhance website to app.
+    - What did this mean for fruitmachine...?
+  </aside>
+</section>
+
+<section>
+  <h3>Client &amp; server share definitions</h3>
+  <h3 class="fragment">All views rendered as strings</h3>
+  <h3 class="fragment">Client enhances server generated HTML</h3>
+
+  <aside class="notes" data-markdown>
+    - This mean that all views had to be rendered a strings
+    - Without a DOM we render HTML strings, **fast**.
+    - Sent down the wire, **Brought to life** on the client
+  </aside>
+</section>
+
+<!-- ECAPSULATION -->
+
+<section class="dark" data-background="rgba(255,0,0, 0.6)">
+  <h1>Encapsulation</h1>
+
+  <aside class="notes" data-markdown>
+    - What does 'encapsulation' mean...?
+  </aside>
+</section>
+
+<section>
+  <h3>'The condition of being enclosed <br/>(as in a capsule)'</h3>
+</section>
+
+<section>
+  <h2>Why is encapsulation good?</h2>
+</section>
+
+<!-- <section>
+  <h3>Promotes reuse</h3>
+  <h3 class="fragment">Decouples from application</h3>
+  <h3 class="fragment">Lowers barrier to entry</h3>
+  <h3 class="fragment">Sense of ownership</h3>
+
+  <aside class="notes" data-markdown>
+    - Decouples:
+      - By not depending on outside conditions. Dropped anywhere.
+      - Untangle our code-base, making applications easier to maintain.
+    - Lowers barrier to entry
+      - Reduces required scope of understanding
+    - Improved sense of 'ownership'
+      - Devlopers care more when they feel ownership
+      - Ownership can be lost as teams and app grow
+    - **Next:** Quote captures the problem that encapsulation solves...
+  </aside>
+</section> -->
+
+<section>
+  <h2>Promotes <strong>reuse</strong></h2>
+
+  <aside class="notes" data-markdown>
+    - When components don't depend on **outside conditions**
+    - They can be dropped anywhere
+    - Makes reusing chunks of UI easy
+  </aside>
+</section>
+
+<section>
+  <h2><strong>Decoupled</strong> from application</h2>
+
+  <aside class="notes" data-markdown>
+    - **Untangle** our code-base
+    - Making applications easier to **maintain**.
+  </aside>
+</section>
+
+<section>
+  <h2>Lower barrier to entry</h2>
+
+  <aside class="notes" data-markdown>
+    - By reducing required scope of understanding
+    - New devs can dive straight into an app
+      - need only understand the small component their task concerns
+      - Make changes without fear of breaking other unrelated parts
+  </aside>
+</section>
+
+<section>
+  <h2>Improve sense of <strong>ownership</strong></h2>
+
+  <aside class="notes" data-markdown>
+    - Devlopers **care more** when they feel **ownership/accountability**
+    - Ownership can get lost as **teams/apps grow**
+    - Making developers owners of components can help boost lingering enthusiasm
+    - **Next:** Quote captures the problem that encapsulation solves...
+  </aside>
+</section>
+
+<section>
+  <h4>"The more tied components are to each other, the <strong>less reusable</strong> they will be; and the more difficult it becomes to make changes to one, without accidentally affecting another"</h4>
+  <small>- Rebecca Murphey, jQuery Fundamentals.</small>
+
+  <aside class="notes" data-markdown>
+    - Enough about why it's good.
+    - **Next:** Let's walk through an example of a component that **isn't encapsulated**, and see how we can **improve it**.
+  </aside>
+</section>
+
+<section>
+<pre><code class="javascript" data-trim>
+// Component Code
+var MyComponent = function() {
+  var myElement = document.querySelector('.my-element');
+  this.el = document.createElement('div');
+  this.el.style.height = myElement.clientHeight + 'px';
+};
+</code></pre>
+
+<pre><code class="javascript" data-trim>
+// Application code
+var component = new MyComponent();
+document.body.appendChild(component.el);
+</code></pre>
+
+  <aside class="notes" data-markdown>
+    - Spec: Match height of 'my-element'
+    - This component is not encapsulated
+    - document is out of scope
+    - **Next:** Let's improve this...
+  </aside>
+</section>
+
+<section>
+<pre><code class="javascript" data-trim>
+// Component Code
+var MyComponent = function(options) {
+  this.el = document.createElement('div');
+  this.el.style.height = options.height + 'px';
+};
+</code></pre>
+
+<pre><code class="javascript" data-trim>
+// Application Code
+var myElement = document.querySelector('.my-element');
+var height = myElement.clientHeight;
+var component = new MyComponent({ height: height });
+document.body.appendChild(component.el);
+</code></pre>
+
+  <aside class="notes" data-markdown>
+    - Tightened up the scope, by injecting dependencies.
+    - Easier to unit-test.
+    - Let's summarise what we've learnt...
+  </aside>
+</section>
+
+<section>
+  <h3>Treat each component as a 'mini-app'</h3>
+  <h3 class="fragment">Pass/inject outside dependencies</h3>
+  <h3 class="fragment">Ignorance is bliss</h3>
+
+  <aside class="notes" data-markdown>
+    - In-penetrable boundary
+    - This take me onto my next topic...
+  </aside>
+</section>
+
+<!-- COMMUNICATION -->
+
+<section class="dark" data-background="rgba(255,0,0, 0.6)">
+  <h1>Communication</h1>
+
+  <aside class="notes" data-markdown>
+    - Well architected 'communication' is critical to keeping components encapsulated
+    - We need to be able to talk to our components, and our components need to be able to talk to us.
+    - Communication is two-way
+  </aside>
+</section>
+
+<section>
+  <h2>API &amp; Events</h2>
+
+  <aside class="notes" data-markdown>
+    - Our application talks to its components using API
+    - Our components talk to our application using events
+    - FruitMachine components all have event logic mixed in
+  </aside>
+</section>
+
+<section>
+  <h2>Your app should control its components, never the reverse.</h2>
+
+  <aside class="notes" data-markdown>
+    - Let's take a look at an example of how good use of communication can 'decouple' components from application
+  </aside>
+</section>
+
+<section>
+<pre><code class="javascript" data-trim>
+var app = require('app');
+
+function MyImage(options) {
+  this.el = document.createElement('img');
+  this.el.src = options.src;
+  this.el.addEventListener('click', app.showGallery);
+};
+</code></pre>
+<pre><code class="javascript" data-trim>
+// App code
+var MyImage = require('my-image');
+var image = new MyImage({ src: 'image.jpg' });
+</code></pre>
+
+  <aside class="notes" data-markdown>
+    - Component depends on our application
+    - Means can't be reused
+    - Circular dependencies:
+      - Can break builds
+      - Tangled code-base
+      - It's tempting to call app code; it's so close, don't!
+  </aside>
+</section>
+
+<section>
+  <h2>Events can save us!</h2>
+</section>
+
+<section>
+<pre><code class="javascript" data-trim>
+function MyImage(src) {
+  var self = this;
+  events(this); // <=
+  this.el = document.createElement('image');
+  this.el.src = options.src;
+  this.el.addEventListener('click', function() {
+    self.fire('click'); // <=
+  });
+}
+</code></pre>
+<pre><code class="javascript" data-trim>
+var MyImage = require('my-image');
+var image = new MyImage({ src: 'image.jpg' });
+
+image.on('click', showGallery); // <=
+</code></pre>
+</section>
+
+<section>
+  <h3>Events are awesome!</h3>
+  <h3 class="fragment">...but know when they're not appropriate</h3>
+</section>
+
+<section>
+<pre><code class="javascript" data-trim>
+// Don't describe intention
+this.fire('showgallery');
+</code></pre>
+
+<pre class="fragment"><code class="javascript" data-trim>
+// Describe what happened
+this.fire('click');
+</code></pre>
+
+<pre class="fragment"><code class="javascript" data-trim>
+// ... and let the app decide what to do
+image.on('click', showGallery);
+</code></pre>
+</section>
+
+<section>
+  <h3>API to <strong>cause</strong> something to happen</h3>
+  <h3 class="fragment">Events to <strong>signal</strong> something <strong>has</strong> happened</h3>
+  <h3 class="fragment">Fire from where the event happened</h3>
+
+  <aside class="notes" data-markdown>
+    Communication rule of thumb:
+
+    - Use API to cause something to happen
+    - Use events to signal something has happened
+    - Events should be fired where they happened
+  </aside>
+</section>
+
+<section>
+  <h2>Bubbling</h2>
+
+  <aside class="notes" data-markdown>
+    - If you're familiar with DOM events you'll be aware of the concept of 'bubbling'
+    - Is when events rise up through the layers of the DOM
+    - We introduced bubbling events to FruitMachine:
+      - Decouple application controllers from components
+      - Layouts of arbitrary components
+    - Example...
+  </aside>
+</section>
+
+<section>
+<pre><code class="javascript" data-trim>
+var image = layout.module('my-image');
+if (image) {
+  image.on('click', showGallery);
+}
+</code></pre>
+</section>
+
+<section>
+  <h3>FruitMachine introduced event propagation to nested components</h3>
+</section>
+
+<section>
+<pre><code class="javascript" data-trim>
+layout.on('click', showGallery);
+</code></pre>
+
+<pre class="fragment"><code class="javascript" data-trim>
+layout.on('click', 'my-image', showGallery);
+</code></pre>
+</section>
+
+<section data-background="url(lib/images/tree.jpg) center bottom no-repeat" data-background-size="auto 94%">
+  <aside class="notes" data-markdown>
+    - Good communication helps solve tangled, circular dependencies.
+    - The application entry point is the trunk
+      - Modules are required, that require other modules... This forms branches.
+    - Circular dependencies occur when a module 'a' => 'b' => 'a'.
+    - The equivalent of a branch rejoining the trunk.
+  </aside>
+</section>
+
+<!-- PERFORMANCE -->
+
+<section class="dark" data-background="rgba(255,0,0, 0.6)">
+  <h1>Performance</h1>
+
+  <aside class="notes" data-markdown>
+    - We have a dreamy component architecture, but is it still fast?
+  </aside>
+</section>
+
+<section>
+  <h2>With hidden implementation, we forfeit some control</h2>
+
+  <aside class="notes" data-markdown>
+    - By hiding implementation details inside components takes away some control from the application.
+  </aside>
+</section>
+
+<section>
+  <h3>Components have full access to the DOM (which can be dangerous)</h3>
+
+  <aside class="notes" data-markdown>
+    - The DOM is shared by all our components.
+    - DOM is **tempramental**, we need to be nice to it.
+  </aside>
+</section>
+
+<section>
+  <h2>Layout is expensive. <br/>Do it as little as possible.</h2>
+
+  <aside class="notes" data-markdown>
+    - Layout is the operation a browser performs to calculate the size and position of each element.
+    - We found layout to be our biggest performance bottleneck.
+  </aside>
+</section>
+
+<section>
+<pre><code class="javascript" data-trim>
+componentA.innerHTML = 'Component A'; // <= Write
+componentA.clientHeight; // <= Read (reflow)
+</code></pre>
+
+<pre><code class="javascript" data-trim>
+componentB.innerHTML = 'Component B'; // <= Write
+componentB.clientHeight; // <= Read (reflow)
+</code></pre>
+
+<pre><code class="javascript" data-trim>
+componentC.innerHTML = 'Component C'; // <= Write
+componentC.clientHeight; // <= Read (reflow)
+</code></pre>
+
+<aside class="notes" data-markdown>
+  - This example illustrates the problem we were having
+</aside>
+</section>
+
+<section>
+  <h2>'Layout thrashing'</h2>
+  <h2 class="fragment">How can we prevent it...?</h2>
+</section>
+
+<section>
+  <h1>FastDOM</h1>
+  <h4><a href="http://github.com/wilsonpage/fastdom">github.com/wilsonpage/fastdom</a></h4>
+</section>
+
+<section>
+  <h3>FastDOM avoids layout thrashing, by <strong>batching</strong> DOM reads &amp; writes.</h3>
+</section>
+
+<section>
+<pre><code class="javascript" data-trim>
+fastdom.write(function() {
+  componentA.innerHTML = 'Component A'; // <= Write
+  fastdom.read(function() {
+    componentA.clientHeight; // <= Read
+  });
+});
+</code></pre>
+
+<pre><code class="javascript" data-trim>
+fastdom.write(function() {
+  componentB.innerHTML = 'Component B'; // <= Write
+  fastdom.read(function() {
+    componentB.clientHeight; // <= Read
+  });
+});
+</code></pre>
+
+  <aside class="notes" data-markdown>
+    - Wrap DOM write operation in `fastdom.write`.
+    - And each DOM read operation in `fastdom.read`.
+    - FastDOM schedules the work to be run on the next animation frame.
+    - It runs them in two batches, 'reads', then 'writes' to avoid thrashing.
+  </aside>
+</section>
+
+<section>
+  <h3>'Layout' now occurs only <strong>once</strong> per frame</h3>
+
+  <aside class="notes" data-markdown>
+    - Layout now only occurs *once*, per frame.
+    - Essentially FastDOM gives us an asynchronous, non-blocking DOM.
+  </aside>
+</section>
+
+<section>
+  <h1>Layout boundaries</h1>
+  <p><a href="http://wilsonpage.co.uk/introducing-layout-boundaries">wilsonpage.co.uk/introducing-layout-boundaries</a></p>
+
+  <aside class="notes" data-markdown>
+    - One of the other performance boosts I cam across last year.
+    - A 'layout boundary' is a DOM node that can limit the scope of layout.
+    - When the DOM changes, browser doesn't have to layout on elements *outside* the boundary.
+    - NEXT: Let's have a look at the performance gains...
+  </aside>
+</section>
+
+<section>
+  <img class="stretch" src="lib/images/companies-without-layout-boundary.png" />
+
+  <aside class="notes" data-markdown>
+    - Timeline profile 'post-render' layout
+    - Took 5.6ms
+    - Size of the layout tree 1814
+    - Layout scope/root is 'document'
+    - No layout boundaries were encountered
+    - NEXT: Let's look at the same operation with a layout boundary...
+  </aside>
+</section>
+
+<section>
+  <img class="stretch" src="lib/images/companies-with-layout-boundary.png" />
+
+  <aside class="notes" data-markdown>
+    - Duration dropped from 5.6 to 1.6ms
+    - Layout tree reduced: 1814 -> 607 nodes
+    - Layout scope/root is our layout-boundary
+  </aside>
+</section>
+
+<section>
+  <h3>300% improvement in layout performance</h3>
+
+  <aside class="notes" data-markdown>
+    - On mobile, this make a big difference!
+  </aside>
+</section>
+
+<section>
+  <img class="stretch" src="lib/images/accordion-without-layout-boundary.png" />
+
+  <aside class="notes" data-markdown>
+    - Duration: 3.45ms
+    - 'layout tree size': 996 nodes
+  </aside>
+</section>
+
+<section>
+  <img class="stretch" src="lib/images/accordion-with-layout-boundary.png" />
+
+  <aside class="notes" data-markdown>
+    - Layout is about 5 times faster (0.6ms)
+    - 'layout tree size' has reduced (234 nodes)
+    - The 'layout root' has changed
+  </aside>
+</section>
+
+<section>
+  <h3>Improved animation frame-rate</h3>
+</section>
+
+<section>
+  <h2>How can I make one?</h2>
+</section>
+
+<section>
+  <h4 class="fragment">Not be display <code>inline</code> or <code>inline-block</code></h4>
+  <h4 class="fragment">Not have a percentage <code>height</code> value.</h4>
+  <h4 class="fragment">Not have an implicit or <code>auto</code> <code>height</code> value.</h4>
+  <h4 class="fragment">Not have an implicit or <code>auto</code> <code>width</code> value.</h4>
+  <h4 class="fragment">Have an explicit <code>overflow</code> value (<code>scroll</code>, <code>auto</code> or <code>hidden</code>).</h4>
+  <h4 class="fragment">Not be a descendant of a <code>&lt;table&gt;</code> element.</h4>
+
+  <aside class="notes" data-markdown>
+    - What defines a layout boundary?
+    - Some of that sounds complicated...
+  </aside>
+</section>
+
+<section>
+<pre><code class="css" data-trim>
+.my-component {
+  width: 100%;
+  height: 100px;
+  overflow: hidden;
+}
+</code></pre>
+
+  <aside class="notes" data-markdown>
+    - A percentage or pixel width
+    - A pixel height
+    - And overflow set to 'hidden'
+    - The **root element** of many of our components
+  </aside>
+</section>
+
+<section>
+  <h3><a href="http://github.com/paullewis/Boundarizr">github.com/paullewis/boundarizr</a></h3>
+
+  <aside class="notes" data-markdown>
+    - If this is still confusing, Paul Lewis made a tool called 'Boundarizr' which helps identify 'Layout Boundaries'.
+    - NEXT: Let's summarise...
+  </aside>
+</section>
+
+<section>
+  <h4 class="fragment">Try a tool like FastDOM to harmonize thrashing components</h4>
+  <h4 class="fragment">Experiment with 'layout boundaries' to improve post-render layout performance</h4>
+
+  <aside class="notes" data-markdown>
+    - Summary
+  </aside>
+</section>
+
+<!-- STYLING -->
+
+<section class="dark" data-background="rgba(255,0,0, 0.6)">
+  <h1>Styling</h1>
+
+  <aside class="notes" data-markdown>
+    - We've got our components on the page and they're fast.
+    - Now we need to style them.
+    - Our main two goals are:
+      - **Portability**
+      - **Preventing leakage**
+  </aside>
+</section>
+
+<section>
+  <h3 class="fragment">CSS is tricky to tame</h3>
+  <h3 class="fragment">'Componentising' makes things easier</h3>
+
+  <aside class="notes" data-markdown>
+    In big applications:
+
+    - CSS is tricky to tame...
+    - ...but 'Componentising' makes things easier
+  </aside>
+</section>
+
+<section>
+  <img class="clean stretch" src="lib/images/one-file-per-component.png" />
+
+  <aside class="notes" data-markdown>
+    - You could end up with 100s of files
+    - Relax, SASS will concatenate for us.
+    - Our directory structure is flat.
+      - All components created equal.
+    - Let's talk about our 'styling objectives'.
+  </aside>
+</section>
+
+<section>
+  <h2>Maximise portability</h2>
+  <h2 class="fragment">Minimise leakage</h2>
+
+  <aside class="notes" data-markdown>
+    - Portable: Drop a component anywhere
+    - Leakage: Prevent our styling accidentally leaking onto other components.
+    - Soon 'Shadow DOM' and 'Scoped stylesheets' will help
+    - NEXT: Now we must depend on 'pure discipline'
+  </aside>
+</section>
+
+<section>
+  <h2>Pure <strong>discipline</strong></h2>
+
+  <aside class="notes" data-markdown>
+    - Let's look at different approaches to styling a simple component
+    - Address some of the issues frequently seen in the wild.
+  </aside>
+</section>
+
+<section>
+<pre><code class="html" data-trim>
+<article>
+  <h1>Headline</h1>
+  <p>Body content</p>
+</article>
+</code></pre>
+
+<pre><code class="css" data-trim>
+article { /* styles */ }
+h1 { /* styles */ }
+p { /* styles */ }
+</code></pre>
+
+<aside class="notes" data-markdown>
+- This looks like bad news:
+  - Will affect every other `artice`, `h1` and `p`
+  - CSS is like  coding with `window` globals in JS.
+  - In JS we have closures; in CSS there is no concept of scope...
+- NEXT: So we need to fake it...
+</aside>
+</section>
+
+<section>
+<pre><code class="html" data-trim>
+<article class="my-component">
+  <h1 class="headline">Headline</h1>
+  <p class="body">Body content</p>
+</article>
+</code></pre>
+
+<pre><code class="css" data-trim>
+.my-component { /* styles */ }
+.my-component .title { /* styles */ }
+.my-component .body { /* styles */ }
+</code></pre>
+
+<pre class="fragment"><code class="css" data-trim>
+.title { color: red; }
+</code></pre>
+
+<aside class="notes" data-markdown>
+  - Nothing complex, **namespacing** gives basic 'scope'.
+  - Styles will no longer leak.
+  - But: What if someone writes this... (fragment)
+  - Doesn't protect against poorly written styles by other.
+  - Using common class names leaves us open to attack.
+  - NEXT: We must protect ourselves from this carelessness!
+</aside>
+</section>
+
+<section>
+<pre><code class="html" data-trim>
+<article class="my-component">
+  <h1 class="my-component_headline">Headline</h1>
+  <p class="my-component_body">Body content</p>
+</article>
+</code></pre>
+
+<pre><code class="css" data-trim>
+.my-component {}
+.my-component_title {}
+.my-component_body {}
+</code></pre>
+
+  <aside class="notes" data-markdown>
+    - There is now a very high probability our classes are **unique**, and we have prevented both leakage, and being leaked upon.
+    - Using prefixed classes negates the need for parent selectors
+      - Shorter selectors
+      - Portable selectors
+    - **NEXT:** Let's summarise...
+  </aside>
+</section>
+<!--
+<section>
+  <h4 class="fragment">Component name as the class of the root element</h4>
+  <h4 class="fragment">Unique classes, like <code>component-name_*</code>, <br>can prevent (and protect from) leakage</h4>
+  <h4 class="fragment">Avoid polluting the 'global scope'</h4>
+</section> -->
+
+<!-- RESPONSIVE -->
+
+<section class="dark" data-background="rgba(255,0,0, 0.6)">
+  <h1>Responsive</h1>
+</section>
+
+<section>
+  <h3>In a responsive application, components need to change their appearance</h3>
+</section>
+
+<section>
+  <h3><code>@media</code> covers styling, <br/>but sometimes we need more...</h3>
+</section>
+
+<section>
+  <h2>What about behaviours?</h2>
+</section>
+
+<section>
+  <img class="clean stretch" src="lib/images/satsuma-column.png" />
+</section>
+
+<section>
+  <img class="clean stretch" src="lib/images/satsuma-row.png" />
+</section>
+
+<section>
+  <img class="clean stretch" src="lib/images/satsuma-small.png" />
+</section>
+
+<section>
+  <h3>Same markup</h3>
+  <h3><strong>Different</strong> appearances</h3>
+  <h3><strong>Different</strong> behaviours</h3>
+</section>
+
+<section>
+<pre><code class="stretch smaller javascript" data-trim>
+var ArticleList = fruitmachine.define({
+  name: 'article-list',
+  breakpoints: {
+    'column': {
+      setup: function() {},
+      teardown: function() {}
+    },
+    'row': {
+      setup: function() {},
+      teardown: function() {}
+    },
+     'small': {
+      setup: function() {},
+      teardown: function() {}
+    }
+  }
+});
+</code></pre>
+</section>
+
+<section>
+  <h2>Detecting breakpoints</h2>
+  <h4 class="fragment"><a href="http://adactio.com/journal/5429/">adactio.com/journal/5429</a></h4>
+
+  <aside class="notes" data-markdown>
+    - Inspired by article by Jeremy Keith
+  </aside>
+</section>
+
+<section>
+<pre><code class="css" data-trim>
+@media(orientation: landscape) {
+  .article-list:after { content: 'column' }
+}
+
+@media(orientation: portrait) {
+  .article-list:after { content: 'row' }
+}
+</code></pre>
+
+<pre class="fragment"><code class="javascript" data-trim>
+window.addEventListener('resize', function() {
+  var style = getComputedStyle(articleList.el, ':after');
+  style.content; //=> 'column'|'row'
+});
+</code></pre>
+</section>
+
+<section>
+  <h3>We could now map JS breakpoints to CSS breakpoints</h3>
+
+  <aside class="notes" data-markdown>
+    - It worked and it was relatively simple
+    - What I didn't know...
+    - I'd just implemented our biggest performance bottleneck.
+  </aside>
+</section>
+
+<section>
+  <h3>
+    <code>window.getComputedStyle()</code><br/>
+    ...kinda expensive!
+  </h3>
+
+  <aside class="notes" data-markdown>
+    - When run several times per second, per component
+    - I'd created a monster.
+    - I needed to kill it before my team found out what I'd done
+    - Back to the drawing board...
+  </aside>
+</section>
+
+<section>
+  <h2><code>window.matchMedia</code></h2>
+
+  <aside class="notes" data-markdown>
+    - I had known for a while matchMedia could tell you whether a media-query matched the current document.
+    - What I didn't know was that you could listen for changes
+  </aside>
+</section>
+
+<section>
+<pre><code class="javascript" data-trim>
+var media = window.matchMedia('(min-width: 500px)');
+
+media.addListener(function(data) {
+  alert('matches: ' + data.matches);
+});
+</code></pre>
+
+<aside class="notes" data-markdown>
+  - It seemed perfect, so I set about work
+</aside>
+</section>
+
+<section>
+<pre class="stretch"><code class="smaller javascript" data-trim>
+var ArticleList = fruitmachine.define({
+  name: 'article-list',
+  media: {
+    'orientation: landscape': 'column',
+    'orientation: portrait': 'row',
+    ...
+  },
+  states: {
+    'column': {
+      setup: function() {},
+      teardown: function() {}
+    },
+    'row': {
+      ...
+    }
+  }
+});
+</code></pre>
+<aside class="notes" data-markdown>
+  - `media` property to map a media-query to a 'state'
+</aside>
+</section>
+
+<section>
+<pre><code class="css" data-trim>
+.my-component.column {
+  /* 'column' styling */
+}
+
+.my-component.row {
+  /* 'row' styling */
+}
+</code></pre>
+<aside class="notes" data-markdown>
+  - Moved all media-queries into JavaScript and instead used classes to style the different states.
+  - Ensured styling and behaviours always remained in sync.
+</aside>
+</section>
+
+<section>
+  <h3>Can you re-use the same component with <strong>different</strong> breakpoints?</h3>
+
+  <aside class="notes" data-markdown>
+    - Default breakpoints aren't always appropriate
+  </aside>
+</section>
+
+<section>
+  <img class="clean stretch" src="lib/images/peach-row.png" />
+</section>
+
+<section>
+  <img class="clean stretch" src="lib/images/peach-column.png" />
+
+  <aside class="notes" data-markdown>
+    - How can we re-use the same component with a different breakpoint configuration?
+  </aside>
+</section>
+
+<section>
+<pre><code class="javascript" data-trim>
+var peach = new Peach({
+  media: {
+    'orientation: landscape': 'column'
+  }
+});
+</code></pre>
+
+<aside class="notes" data-markdown>
+  - Override media map per instance
+  - CSS breakpoints can't be easily overridden, JS can.
+  - I've reversed the media map.
+</aside>
+</section>
+
+<section class="dark" data-background="rgba(255,0,0, 0.6)">
+  <h1>Conclude</h1>
+
+  <aside class="notes" data-markdown>
+    - Let's dilute what we've spoken about
+    - Some key points...
+  </aside>
+</section>
+
+<section>
+  <h4>Tight scope to promotes reuse and reduces tangled code-bases</h4>
+  <h4 class="fragment">Use configuration to maximise usage</h4>
+  <h4 class="fragment">Expose a public interface</h4>
+  <h4 class="fragment">Use events to react to changes</h4>
+  <h4 class="fragment">Timeline your apps to keep an eye out costly DOM work</h4>
+  <h4 class="fragment">Smart CSS selectors for rock solid styling</h4>
+  <h4 class="fragment">Look to existing components (like <code>&lt;video&gt;</code>) for inspiration</h4>
+  <h4 class="fragment"><code>window.matchMedia</code> for 'behavioural' breakpoints</h4>
+
+  <aside class="notes" data-markdown>
+    - Keep components tightly scoped. Promote reuse, reduce tangled code-bases
+    - Make components configurable to maximise their usage
+    - Expose a public interface so components can be controlled
+    - Use events to react to changes inside components
+    - Timeline your apps to keep an eye out costly DOM work
+    - Use smart CSS selectors for rock solid styling
+    - Look to existing web-components, like video, for inspiration
+    - `window.matchMedia` can help with 'behavioural' breakpoints
+  </aside>
+</section>
+
+<section>
+  <h4>"The secret to building large apps is <strong>never build large apps</strong>. Break your applications into <strong>small pieces</strong>. Then, assemble those testable, bite-sized pieces into your big application"</h4><small> - Justin Meyer, JavaScriptMVC</small>
+</section>
+
+<section data-background="url(lib/images/globe.jpg) no-repeat center" data-background-size="33%">
+  <aside class="notes" data-markdown>
+    If we're going to get better as an industry, we should look at lessons already learnt. Manufacturing an entire car from scratch is no longer competitive, parts are **sourced** from all over the world, then **assembled in one place**.
+
+    Imagine a web of **trusted**, **shareable** components at our **fingertips**. More people, building higher quality applications, with ease. If we **embrace this change**, if build this platform, **we can make the web win**.
+  </aside>
+</section>
+
+<section class="dark" data-background="rgba(255,0,0, 0.6)">
+  <h1>@wilsonpage</h1>
+</section>
+
+</div>
+</div>
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.min.js"></script>
+<script>
+
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+  controls: true,
+  progress: true,
+  history: true,
+  center: true,
+  transition: 'linear', // default/cube/page/concave/zoom/linear/fade/none
+
+  // Parallax scrolling
+  // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+  // parallaxBackgroundSize: '2100px 900px',
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+  ]
+});
+
+</script>
+</body>
+</html>
