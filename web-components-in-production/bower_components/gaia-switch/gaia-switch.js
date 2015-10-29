@@ -15,12 +15,42 @@ var Drag = require('drag');
 var debug = 0 ? console.log.bind(console) : function() {};
 
 /**
+ * Handles convertion of edges values
+ * to checked Booleans and checked
+ * Booleans to edge values.
+ *
+ * This is because in LTR mode when the
+ * handle is against the left edge the
+ * switch is checked, in RTL mode it's
+ * the opposite.
+ *
+ * @type {Object}
+ */
+var convert = {
+  ltr: {
+    edges: { '0': false, '1': true },
+    checked: { 'true': '1', 'false': '0' }
+  },
+
+  rtl: {
+    edges: { '0': true, '1': false },
+    checked: { 'true': '0', 'false': '1' }
+  },
+
+  toChecked: function(edge) {
+    return this[dir()].edges[edge];
+  },
+
+  toEdge: function(checked) {
+    return this[dir()].checked[checked];
+  }
+};
+
+/**
  * Exports
  */
 
 module.exports = component.register('gaia-switch', {
-  extends: HTMLInputElement.prototype,
-
   rtl: true,
 
   created: function() {
@@ -408,38 +438,6 @@ function getLabel(el) {
 function dir() {
   return document.dir || 'ltr';
 }
-
-/**
- * Handles convertion of edges values
- * to checked Booleans and checked
- * Booleans to edge values.
- *
- * This is because in LTR mode when the
- * handle is against the left edge the
- * switch is checked, in RTL mode it's
- * the opposite.
- *
- * @type {Object}
- */
-var convert = {
-  ltr: {
-    edges: { '0': false, '1': true },
-    checked: { 'true': '1', 'false': '0' }
-  },
-
-  rtl: {
-    edges: { '0': true, '1': false },
-    checked: { 'true': '0', 'false': '1' }
-  },
-
-  toChecked: function(edge) {
-    return this[dir()].edges[edge];
-  },
-
-  toEdge: function(checked) {
-    return this[dir()].checked[checked];
-  }
-};
 
 function on(el, name, fn) { el.addEventListener(name, fn); }
 function off(el, name, fn) { el.removeEventListener(name, fn); }

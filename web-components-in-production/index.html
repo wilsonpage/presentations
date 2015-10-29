@@ -1,27 +1,59 @@
 <!doctype html>
 <html lang="en">
-
   <head>
     <meta charset="utf-8">
-
-    <title>The state of web components</title>
-
-    <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
-    <meta name="author" content="Hakim El Hattab">
+    <title>Web Components in production</title>
+    <meta name="author" content="Wilson Page">
 
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
+    <link rel="stylesheet" href="bower_components/gaia-fonts/style.css">
     <link rel="stylesheet" href="css/reveal.css">
-    <link rel="stylesheet" href="css/theme/wilson.css" id="theme">
+    <link rel="stylesheet" href="css/wilson.css" id="theme">
+    <link rel="stylesheet" href="css/code.css">
 
     <link rel="stylesheet" href="bower_components/gaia-theme/gaia-theme.css">
     <link rel="stylesheet" href="bower_components/gaia-icons/gaia-icons.css">
 
-    <!-- Code syntax highlighting -->
-    <link rel="stylesheet" href="lib/css/monokai_sublime.css">
+    <script src="bower_components/gaia-component/gaia-component.js"></script>
+    <script src="bower_components/gaia-theme/lib/gaia-theme-selector.js"></script>
+    <script src="bower_components/gaia-sub-header/gaia-sub-header.js"></script>
+    <script src="bower_components/font-fit/font-fit.js"></script>
+    <script src="bower_components/gaia-header/gaia-header.js"></script>
+    <script src="bower_components/gaia-text-input/gaia-text-input.js"></script>
+    <script src="bower_components/gaia-text-input/gaia-text-input-multiline.js"></script>
+    <script src="bower_components/gaia-text-input/gaia-text-input-pin.js"></script>
+    <script src="bower_components/gaia-button/gaia-button.js"></script>
+    <script src="bower_components/gaia-form/gaia-form.js"></script>
+    <script src="bower_components/drag/drag.js"></script>
+    <script src="bower_components/gaia-switch/gaia-switch.js"></script>
+    <script src="bower_components/gaia-checkbox/gaia-checkbox.js"></script>
+    <script src="bower_components/gaia-slider/gaia-slider.js"></script>
+    <script src="bower_components/gaia-tabs/gaia-tabs.js"></script>
+    <script src="bower_components/gaia-toast/gaia-toast.js"></script>
+
+    <script src="bower_components/gaia-dialog/gaia-dialog.js"></script>
+    <script src="bower_components/gaia-dialog/gaia-dialog-alert.js"></script>
+    <script src="bower_components/gaia-dialog/gaia-dialog-confirm.js"></script>
+    <script src="bower_components/gaia-dialog/gaia-dialog-prompt.js"></script>
+    <script src="bower_components/gaia-dialog/gaia-dialog-action.js"></script>
+    <script src="bower_components/gaia-dialog/gaia-dialog-select.js"></script>
+    <script src="bower_components/gaia-dialog/gaia-dialog-menu.js"></script>
+
+    <!-- gaia-fast-list -->
+    <script src="bower_components/poplar/poplar.js"></script>
+    <script src="bower_components/fast-list/fast-list.js"></script>
+    <script src="bower_components/gaia-fast-list/gaia-fast-list.js"></script>
+    <script src="gaia-fast-list.js"></script>
+
+    <!-- gaia-picker -->
+    <script src="bower_components/gaia-picker/lib/snap-scroll.js"></script>
+    <script src="bower_components/gaia-picker/gaia-picker.js"></script>
+    <script src="bower_components/gaia-picker/gaia-picker-time.js"></script>
+    <script src="bower_components/gaia-picker/gaia-picker-date.js"></script>
 
     <!-- Printing and PDF exports -->
     <script>
@@ -36,10 +68,11 @@
     <script src="lib/js/html5shiv.js"></script>
     <![endif]-->
   </head>
-
-  <body spellcheck="false" class="theme-settings">
-
+  <body spellcheck="false">
+    <gaia-theme-selector slidehide></gaia-theme-selector>
     <div class="reveal">
+
+<!--       <svg xmlns="http://www.w3.org/2000/svg" width="100%" preserveAspectRatio="xMidYMid" viewBox="0 0 47.333 40.667"><g><path fill="var(--background-plus)" d="M40.331 16.802l.961 3.307-7.361 2.08s0 4.427-3.572 6.186c-3.572 1.761-6.347.269-6.347.269l-.445-1.279 5.3-1.441 1.174-4.535-3.416-3.358-4.906 1.484-.426-1.165s2.293-5.067 9.067-2.187c0 0 2.135 1.333 2.613 2.506l7.358-1.867zM41.292 16.553l1.173-.337.944 3.379-1.229.37zM41.706 16.405l.759-.189.944 3.379-1.229.37-.32-1.13.49-.191zM39.518 17.01l.812-.207.961 3.307-7.361 2.08s-.078 3.864-2.639 5.612c-2.559 1.748-5.441 1.694-7.28.844l-.205-.591s5.007 1.177 7.485-2.585c1.494-2.48 1.467-4.266 1.467-4.266l7.389-1.999-.629-2.195zM21.29 18.349l4.322-1.254 1.012.935-4.908 1.484zM6.058 20.695l.868 3.333 7.386-1.978s2.267 3.802 6.238 3.485c3.972-.317 5.589-3.016 5.589-3.016l-.273-1.33-5.288 1.476-3.328-3.295 1.214-4.635 4.975-1.233-.23-1.22s-4.562-3.181-8.909 2.76c0 0-1.15 2.238-.962 3.492l-7.28 2.161zM5.105 20.972l-1.18.311.917 3.384 1.246-.308zM4.674 21.055l-.749.228.917 3.384 1.246-.308-.301-1.137-.521.085zM6.863 20.457l-.805.238.868 3.333 7.386-1.978s2.047 3.276 5.142 3.468c3.093.192 5.541-1.325 6.685-3l-.123-.613s-3.701 3.572-7.755 1.611c-2.553-1.367-3.442-2.917-3.442-2.917l-7.373 2.062-.583-2.204zM23.21 12.281l-4.353 1.134-.393 1.319 4.976-1.233z"/></g></svg> -->
 
       <!-- Any section element inside of this container is displayed as a slide -->
       <div class="slides">
@@ -51,7 +84,17 @@
         </section>
 
         <section>
-          <img src="lib/images/firefox-dev.png" style="width: 50%">
+          <img src="lib/images/firefox-dev.png" style="width: 40%">
+        </section>
+
+        <section>
+          <h3>What we'll cover</h3>
+          <ul>
+            <li>Solving <em>real problems</em> with web-components</li>
+            <li class="fragment">Demo some FirefoxOS components</li>
+            <li class="fragment">Workflow and patterns</li>
+            <li class="fragment">What's next</li>
+          </ul>
         </section>
 
         <section>
@@ -59,11 +102,15 @@
         </section>
 
         <section>
-          <h2>APIs remain out of reach</h2>
+          <p>"A collection of <em>low-level</em>, <em>framework agnostic</em> APIs for creating <em>portable UI</em> pieces"</p>
         </section>
 
         <section>
-          <img src="lib/images/switch.png" style="width: 50%">
+          <h2>APIs remain out of reach</h2><span style="font-size:2.4em">😭</span>
+        </section>
+
+        <section>
+          <img src="lib/images/switch.png" style="width: 40%">
         </section>
 
         <section>
@@ -71,7 +118,7 @@
         </section>
 
         <section>
-          <h1>Components in FirefoxOS</h1>
+          <h1>Sharing UI in FirefoxOS</h1>
         </section>
 
         <section>
@@ -81,15 +128,15 @@
 
         <section>
           <h2>Previously we used simple CSS</h2>
-          <p>But we ran into some problems</p>
+          <p>But we ran into some problems &hellip;</p>
         </section>
 
         <section>
           <ul>
-            <li>Users have to write the correct markup</li>
-            <li class="fragment">Styling could be overriden by external CSS</li>
-            <li class="fragment">Logic-less CSS: preventing rich interactions</li>
-            <li class="fragment">Difficult to update: Due to tailored implementations</li>
+            <li>Users have to write exactly the <em>right markup</em></li>
+            <li class="fragment">Styling can <em>clash with external CSS</em></li>
+            <li class="fragment"><em>Logic-less CSS</em>: prevents rich interactions</li>
+            <li class="fragment"><em>Difficult to update</em>: Due to tailored implementations</li>
           </ul>
         </section>
 
@@ -99,10 +146,11 @@
 
         <section>
           <ul>
-            <li>Markup bundled inside a component: doesn't have to be written by users</li>
-            <li class="fragment">Styling isolated/protected from external CSS</li>
-            <li class="fragment">Can come with JS logic as well as styling</li>
-            <li class="fragment">Implementation details hidden for simple updates</li>
+            <li>Structural <em>markup bundled</em>: not written by users</li>
+            <li class="fragment">Styling <em>protected</em> from external CSS</li>
+            <li class="fragment">Can come with <em>JS logic</em> as well as styling</li>
+            <li class="fragment"><em>Implementation details hidden</em> for simple updates</li>
+            <li class="fragment">Users get <em>RTL and a11y</em> out the box</li>
           </ul>
         </section>
 
@@ -112,19 +160,259 @@
         </section>
 
         <section>
+          <h4 style="margin-bottom: 1em">&lt;gaia-text-input&gt;</h4>
+
+          <gaia-form style="width: 33.33%; margin: 0 auto;">
+            <gaia-text-input placeholder="Default" clearable></gaia-text-input>
+            <gaia-text-input placeholder="Disabled" disabled></gaia-text-input>
+            <gaia-text-input type="password" placeholder="Password"></gaia-text-input>
+            <gaia-text-input type="search" placeholder="Search..." clearable></gaia-text-input>
+            <gaia-text-input-multiline type="multiline" placeholder="Multiline"></gaia-text-input-multiline>
+            <gaia-text-input-pin></gaia-text-input-pin>
+          </gaia-form>
+        </section>
+
+        <section>
+          <h4 style="margin-bottom: 1em">&lt;gaia-button&gt;</h4>
+
+          <gaia-form style="width: 33.33%; margin: 0 auto;">
+            <div>
+              <gaia-button flex>Gaia-button</gaia-button>
+              <gaia-button flex><i data-icon="settings" aria-hidden="true"></i><span>Settings</span></gaia-button>
+            </div>
+            <div>
+              <gaia-button circular><i data-icon="left" aria-hidden="true"></i></gaia-button>
+              <gaia-button circular><i data-icon="airplane" aria-hidden="true"></i></gaia-button>
+              <gaia-button circular><i data-icon="camera" aria-hidden="true"></i></gaia-button>
+              <gaia-button circular><i data-icon="firefox" aria-hidden="true"></i></gaia-button>
+              <gaia-button circular><i data-icon="right" aria-hidden="true"></i></gaia-button>
+            </div>
+            <div>
+              <gaia-button disabled flex>Disabled</gaia-button>
+            </div>
+          </gaia-form>
+        </section>
+
+        <section>
+          <h4 style="margin-bottom: 1em">&lt;gaia-dialog&gt;</h4>
+
+          <gaia-form style="width: 33.33%; margin: 0 auto;">
+            <div>
+              <gaia-button data-dialog="alert" flex>Alert</gaia-button>
+              <gaia-button data-dialog="confirm" flex>Confirm</gaia-button>
+            </div>
+            <div>
+              <gaia-button data-dialog="prompt" flex>Prompt</gaia-button>
+              <gaia-button data-dialog="action" flex>Action</gaia-button>
+            </div>
+          </gaia-form>
+
+          <script>
+            (function() {
+              /*jshint esnext:true*/
+              var els = document.querySelectorAll('[data-dialog]');
+              [].forEach.call(els, el => {
+                el.onclick = e => {
+                  var dialog = document.getElementById(`dialog${el.dataset.dialog}`);
+                  dialog.open(e);
+                };
+              });
+            })();
+          </script>
+        </section>
+
+        <section>
+          <h4 style="margin-bottom: 1em;">&lt;gaia-switch&gt;</h4>
+
+          <gaia-form style="width: 400px; margin: 0 auto;">
+            <li>
+              <label>
+                <h3 flex>This is a label</h3>
+                <gaia-switch></gaia-switch>
+              </label>
+            </li>
+            <li>
+              <label>
+                <h3 flex>This is a label</h3>
+                <gaia-switch checked></gaia-switch>
+              </label>
+            </li>
+            <li>
+              <label>
+                <h3 flex>This is a label</h3>
+                <span divider></span>
+                <gaia-switch></gaia-switch>
+              </label>
+            </li>
+          </gaia-form>
+        </section>
+
+        <section>
+          <h4 style="margin-bottom: 1em">&lt;gaia-checkbox&gt;</h4>
+
+          <gaia-form style="width: 400px; margin: 0 auto;">
+            <li>
+              <label>
+                <h3 flex>This is a label</h3>
+                <span divider></span>
+                <gaia-checkbox checked></gaia-checkbox>
+              </label>
+            </li>
+            <li>
+              <label>
+                <h3 flex>This is a label</h3>
+                <span divider></span>
+                <gaia-checkbox></gaia-checkbox>
+              </label>
+            </li>
+          </gaia-form>
+        </section>
+
+        <section>
+          <p style="margin-bottom: 1em">&lt;gaia-slider&gt;</p>
+
+          <gaia-form style="width: 400px; margin: 0 auto;">
+            <gaia-slider>
+              <label>Range slider</label>
+              <output></output>
+            </gaia-slider>
+          </gaia-form>
+        </section>
+
+        <section>
+          <p style="margin-bottom: 1em">&lt;gaia-tabs&gt;</p>
+
+          <gaia-form style="width: 400px; margin: 0 auto;">
+            <gaia-tabs selected="2">
+              <a class="icon-dialer">Item 1</a>
+              <a class="icon-contacts">Item 2</a>
+              <a class="icon-call-log">Item 3</a>
+              <a disabled="">Item 4</a>
+              <a>Item 5</a>
+            </gaia-tabs>
+          </gaia-form>
+        </section>
+
+        <section>
+          <p style="margin-bottom: 1em">&lt;gaia-toast&gt;</p>
+
+          <gaia-form style="width: 400px; margin: 0 auto;">
+            <div>
+              <gaia-button id="toastbutton">Let's toast</gaia-button>
+            </div>
+          </gaia-form>
+
+          <gaia-toast>Yum...toast</gaia-toast>
+          <script>
+            toastbutton.addEventListener('click', function() {
+              document.querySelector('gaia-toast').show();
+            });
+          </script>
+        </section>
+
+        <section>
+          <style scoped>
+            gaia-form {
+              width: 360px;
+              margin: 0 auto;
+            }
+
+            gaia-header,
+            gaia-text-input {
+              width: 100%;
+            }
+          </style>
+
+          <p style="margin-bottom: 1.4em">&lt;gaia-header&gt;</p>
+          <gaia-form>
+            <div>
+              <gaia-header action="menu" id="gaiaheader" not-flush>
+                <h1></h1>
+                <button>Submit</button>
+              </gaia-header>
+            </div>
+            <div>
+              <gaia-text-input id="gaiaheaderinput" placeholder="Enter title"></gaia-text-input>
+            </div>
+          </gaia-form>
+
+          <script>
+            (function() {
+              var h1 = document.querySelector('#gaiaheader h1');
+              var input = window.gaiaheaderinput;
+              var timeout;
+
+              input.addEventListener('keyup', function() {
+                clearTimeout(timeout);
+                timeout = setTimeout(function() {
+                  h1.textContent = input.value;
+                }, 500);
+              });
+            })();
+          </script>
+        </section>
+
+        <section>
+          <p style="margin-bottom: 1em">&lt;gaia-picker-date&gt;</p>
+          <gaia-picker-date style="height: 200px; width: 260px; margin: 0 auto; border: solid 1px var(--border-color);"></gaia-picker-date>
+        </section>
+
+        <section>
+          <p style="margin-bottom: 1em">&lt;gaia-picker-time&gt;</p>
+          <gaia-picker-time style="height: 200px; width: 260px; margin: 0 auto; border: solid 1px var(--border-color);" format="12hr"></gaia-picker-time>
+        </section>
+
+        <section>
+          <p style="margin-bottom: 1em">&lt;gaia-fast-list&gt;</p>
+
+          <gaia-fast-list style="height: 480px; width: 320px; border: solid 1px var(--border-color); margin: 0 auto;" picker></gaia-fast-list>
+          <script>
+            (function() {
+              /*jshint esnext:true*/
+              var list = document.querySelector('gaia-fast-list');
+
+              list.configure({
+                getSectionName(item) { return item.section; }
+              });
+
+              list.model = getData();
+
+              function getData() {
+                var result = [];
+
+                var letters = 'abcdefghijklmnopqrstuvwyz#';
+                var length = letters.length;
+
+                for (var i = 0; i < length; i++) {
+                  for (var j = 0; j < 20; j++) {
+                    result.push({
+                      title: `${letters[i]} title ${j}`,
+                      body: `Body ${j}`,
+                      section: letters[i]
+                    });
+                  }
+                }
+
+                return result;
+              }
+            })();
+          </script>
+        </section>
+
+        <section>
           <ul>
-            <li>Each component has its own repo</li>
-            <li class="fragment">Installable</li>
-            <li class="fragment">Versioned separately</li>
-            <li class="fragment">Tested separately</li>
+            <li>Each component has its <em>own repo</em></li>
+            <li class="fragment">Easily <em>Installable</em></li>
+            <li class="fragment"><em>Versioned</em> separately</li>
+            <li class="fragment"><em>Tested</em> separately</li>
             <li class="fragment">Issues tracked separately</li>
-            <li class="fragment">Supports all module formats</li>
+            <li class="fragment">Supports all module formats (UMD)</li>
           </ul>
         </section>
 
         <section>
           <h1>Modules</h1>
-          <p>HTML Imports...?</p>
+          <p class="fragment">HTML Imports...?</p>
         </section>
 
         <section>
@@ -160,26 +448,22 @@ return w[n];},m.exports,m);w[n]=m.exports;};})('module-name',this));</code></pre
         </section>
 
         <section>
-          <h2>Theming</h2>
+          <h1>Theming</h1>
+          <p class="fragment">Powered by CSS Variables</p>
         </section>
 
         <section>
-          <ul>
-            <li>Media</li>
-            <li class="fragment">Productivity</li>
-            <li class="fragment">Communications</li>
-            <li class="fragment">Settings</li>
-          </ul>
+          <img src="lib/images/gaia-headers.png"/>
         </section>
 
         <section>
 <pre><code class="js">.theme-settings {
-  --background: var(--color-iota);
-  --background-plus: var(--color-beta);
-  --background-minus: var(--color-epsilon);
-  --background-minus-minus: var(--color-zeta);
-  --highlight-color: var(--color-blue);
-  --border-color: var(--color-theta);
+  --background: #f4f4f4;
+  --background-plus: #ffffff;
+  --background-minus: #858585;
+  --background-minus-minus: #a6a6a6;
+  --highlight-color: #00caf2;
+  --border-color: #e7e7e7;
 }</code></pre>
         </section>
 
@@ -188,7 +472,8 @@ return w[n];},m.exports,m);w[n]=m.exports;};})('module-name',this));</code></pre
   &lt;head&gt;
     &lt;link rel="stylesheet" href="gaia-theme.css"&gt;
   &lt;/head&gt;
-  &lt;body class="theme-media"&gt;</code></pre>
+  &lt;body class="theme-settings"&gt;&lt;/body&gt;
+&lt;/html&gt;</code></pre>
         </section>
 
         <section>
@@ -196,17 +481,59 @@ return w[n];},m.exports,m);w[n]=m.exports;};})('module-name',this));</code></pre
         </section>
 
         <section>
+          <h2>Unit tests</h2>
           <ul>
-            <li>Unit tests via: Karma, Mocha, SinonJS and Chai</li>
-            <li class="fragment">Integration tests via: Mocha and MarionetteJS</li>
-            <li class="fragment">Accessibility testing via: MarionetteJS and Axe</li>
-            <li class="fragment">Linting via: JSHint</li>
+            <li><em>Karma</em>: Runs tests in real browsers</li>
+            <li class="fragment"><em>Mocha</em>: JS test runner</li>
+            <li class="fragment"><em>SinonJS</em>: Stubbing/mocking</li>
+            <li class="fragment"><em>Chai</em>: Assertions</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Integration</h2>
+          <ul>
+            <li><em>MarionetteJS</em>: Drives the browser</li>
+            <li class="fragment"><em>Mocha</em>: Test runner</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3>Accessibility</h3>
+          <ul>
+            <li><em>MarionetteJS</em>: Perform a11y checks</li>
+            <li class="fragment"f><em>Axe</em>: Checks for a11y defects</li>
           </ul>
         </section>
 
         <section>
           <h2>CI via Travis</h2>
-          <p>Tests run against pull-request</p>
+          <p>Tests run automatically</p>
+        </section>
+
+        <section>
+<pre><code class="yml">language: node_js
+
+node_js:
+  - '0.10'
+
+install:
+  - npm install
+
+before_script:
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+
+script:
+  - $CI_ACTION
+
+env:
+  global:
+    - TEST_SUITE=unit
+  matrix:
+    - CI_ACTION="npm run test-lint"
+    - CI_ACTION="npm run test-unit"
+    - CI_ACTION="npm run test-integration"</code></pre>
         </section>
 
         <section>
@@ -223,27 +550,41 @@ return w[n];},m.exports,m);w[n]=m.exports;};})('module-name',this));</code></pre
 
         <section>
           <ul>
-            <li>Dependencies 'flattened' to a known directory
-            <li class="fragment">Github is the sole registry: publish once</li>
-            <li class="fragment">Git tags as versions: version once</li>
-            <li class="fragment">Dependencies deduped</li>
+            <li>Dependencies <em>flattened</em> to a known directory
+            <li class="fragment">Github is the sole registry: <em>publish once</em></li>
+            <li class="fragment">Git tags as versions: <em>version once</em></li>
+            <li class="fragment">Dependencies <em>deduped</em></li>
           </ul>
         </section>
 
         <section>
-          <h2>Typical workflow</h2>
+          <h1>Typical workflow</h1>
         </section>
 
         <section>
           <ol>
-            <li>Submit a pull-request to a component's repo
-            <li class="fragment">Reviewed by component owner</li>
-            <li class="fragment">Merged into `master` branch</li>
-            <li class="fragment">Owner stamps new version using `git tag` (SemVer)</li>
-            <li class="fragment">Owner pushes tag to Github</li>
-            <li class="fragment">Component is updated to new version in Gaia</li>
-            <li class="fragment">New files checked-in to Gaia</li>
+            <li>Submit a <em>pull-request</em> to a component's repo
+            <li class="fragment"><em>Reviewed</em> by component owner</li>
+            <li class="fragment"><em>Merged</em> into `master` branch</li>
+            <li class="fragment">Owner stamps <em>new version</em>: <code>git tag v0.1.0</code></li>
+            <li class="fragment">Owner <em>pushes tag</em> to Github</li>
+            <li class="fragment">Component is updated to new version in <em>Gaia</em></li>
+            <li class="fragment">New files <em>checked-in</em> to Gaia</li>
           </ol>
+        </section>
+
+        <section>
+          <h1>What's next?</h1>
+        </section>
+
+        <section>
+          <ul>
+            <li>Improve <em>cross-browser support</em> as platform stabilises</li>
+            <li class="fragment">Continue to <em>replace old CSS components</em></li>
+            <li class="fragment">Increase <em>test coverage</em></li>
+            <li class="fragment">Hand over ownership</li>
+            <li class="fragment">Create <em>more components!</em></li>
+          </ul>
         </section>
 
         <section>
@@ -280,5 +621,17 @@ return w[n];},m.exports,m);w[n]=m.exports;};})('module-name',this));</code></pre
 
     </script>
 
+
+  <gaia-dialog-alert id="dialogalert">No SIM card is present</gaia-dialog-alert>
+  <gaia-dialog-confirm id="dialogconfirm">Are you sure you want to delete this contact?</gaia-dialog-confirm>
+  <gaia-dialog-prompt id="dialogprompt">Device name</gaia-dialog-prompt>
+  <gaia-dialog id="dialogaction">
+    <section>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eu mollis tortor. Lab mit dior tempor incidentunt ut et dolore magna...</p>
+    </section>
+    <button on-click="close">Action 1</button>
+    <button on-click="close">Action 2</button>
+    <button on-click="close">Cancel</button>
+  </gaia-dialog>
   </body>
 </html>
